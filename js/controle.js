@@ -2,11 +2,12 @@ import { getDatabase, ref, set,push,update ,child } from "https://www.gstatic.co
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
 
 
-const botaoPular = document.querySelector(".arrow-up");
+
 const botaoBaixar= document.querySelector(".arrow-down");
 const botaoAndar= document.querySelector(".arrow-right");
 const botaVoltar= document.querySelector(".arrow-left");
 const botaoEnter= document.querySelector("#buttonB");
+const botaoPular = document.querySelector(".arrow-up");
 
 
 var andar = false;
@@ -38,24 +39,18 @@ const firebaseConfig = {
      set(ref(db, 'acoes/' + acaoId), {
       pular: pulando,
       andar: andando,
-      voltar : voltando,
+      voltar :voltando,
       baixar :baixando,
       enter: enter
-      
     });
       }
 
 
 
-    botaoPular.addEventListener("mousedown", ()=>{
-      updateBanco(true, false, false, false );
-      console.log("update");
-      pular = true;
-    });
-  
+    
    
     botaoBaixar.addEventListener("mousedown", ()=>{
-      updateBanco(false, false, false, true );
+      updateBanco(false, false, false, true ,false);
       console.log("update");
       
     });     
@@ -79,7 +74,12 @@ const firebaseConfig = {
         updateBanco(false, false, false, false,false );
       }, 500);
     });
-    
+
+    botaoPular.addEventListener("mousedown", ()=>{
+      updateBanco(true, false, false, false ,false);
+      console.log("update");
+      
+    }); 
 
     botaoPular.addEventListener("mouseup", ()=>{
       updateBanco(false, false, false, false,false );
@@ -88,6 +88,14 @@ const firebaseConfig = {
     botaoAndar.addEventListener("mouseup", ()=>{
       updateBanco(false, false, false, false,false );
       andar = false;
+    });  
+    botaVoltar.addEventListener("mouseup", ()=>{
+      updateBanco(false, false, false, false,false );
+      
+    });  
+    botaoBaixar.addEventListener("mouseup", ()=>{
+      updateBanco(false, false, false, false,false );
+      
     });  
   
     
