@@ -45,58 +45,90 @@ const firebaseConfig = {
     });
       }
 
-
-
-    
-   
-    botaoBaixar.addEventListener("mousedown", ()=>{
-      updateBanco(false, false, false, true ,false);
-      console.log("update");
+      var longpress = false;
+      var timer = null;
+      var increm = null;
       
-    });     
-    botaoAndar.addEventListener("mousedown", ()=>{
-      if(pular)
-      updateBanco(pulou, true, false, false ,false);
-
-      updateBanco(false, true, false, false,false );
-      console.log("update");
-      andar = true;
-    });  
-    botaVoltar.addEventListener("mousedown", ()=>{
-      updateBanco(false, false, true, false ,false);
-      console.log("update");
-      voltar  = true;
-    });  
-    botaoEnter.addEventListener("mousedown", () => {
-      updateBanco(false, false, false, false,true );
-
-      setTimeout(() => {
-        updateBanco(false, false, false, false,false );
-      }, 500);
-    });
-
-    botaoPular.addEventListener("mousedown", ()=>{
-      updateBanco(true, false, false, false ,false);
-      console.log("update");
+      var cancel = function (e,listacao) {
+          clearTimeout(timer);
+          timer = null;
+          clearInterval(increm);
+          increm = null;
+          updateBanco(false, false, false, false,false );
+      };
+     function start(e, listacao ) {
+          console.log(e);
+          if (e.type === "click" && e.button !== 0) {
+              return;
+          }
       
-    }); 
+          longpress = false;
+          
+          if (timer === null) {
+              timer = setTimeout(function () {
+                  increm = setInterval(function () {
+                    FoorEach(listacao);
+                    updateBanco(pular, andar, voltar, baixar ,enter);
+                    console.log("update");
+                  }, 50);
+              }, 10);
+          }
+      
+          return false;
+      };
 
-    botaoPular.addEventListener("mouseup", ()=>{
-      updateBanco(false, false, false, false,false );
-      pular  =false;
-    });
-    botaoAndar.addEventListener("mouseup", ()=>{
-      updateBanco(false, false, false, false,false );
-      andar = false;
-    });  
-    botaVoltar.addEventListener("mouseup", ()=>{
-      updateBanco(false, false, false, false,false );
-      
-    });  
-    botaoBaixar.addEventListener("mouseup", ()=>{
-      updateBanco(false, false, false, false,false );
-      
-    });  
-  
+      function FoorEach(item) {
+        pular = item[0];
+        andar = item[1];
+        voltar = item[2];
+        baixar = item[3];
+        enter = item[4];
+      }
+
+      var listpular = [true, false, false, false,false];
+      var listandar = [false, true, false, false, false];
+      var listvoltar = [false , false, true, false, false];
+      var listbaixar = [false, false, false, true, false];
+      var listenter = [false, false, false, false ,true];
+
+      botaoPular.addEventListener("mousedown", (e)=> start(e,listpular));
+      botaoPular.addEventListener("touchstart", (e)=> start(e,listpular))
+      botaoPular.addEventListener("mouseup", cancel);
+      botaoPular.addEventListener("mouseout", cancel);
+      botaoPular.addEventListener("touchend", cancel);
+      botaoPular.addEventListener("touchleave", cancel);
+      botaoPular.addEventListener("touchcancel", cancel);
+
+      botaoAndar.addEventListener("mousedown", (e)=> start(e,listandar));
+      botaoAndar.addEventListener("touchstart", (e)=> start(e,listandar));
+      botaoAndar.addEventListener("mouseup", cancel);
+      botaoAndar.addEventListener("mouseout", cancel);
+      botaoAndar.addEventListener("touchend", cancel);
+      botaoAndar.addEventListener("touchleave", cancel);
+      botaoAndar.addEventListener("touchcancel", cancel);
+
+      botaVoltar.addEventListener("mousedown", (e)=> start(e,listvoltar));
+      botaVoltar.addEventListener("touchstart", (e)=> start(e,listvoltar));
+      botaVoltar.addEventListener("mouseup", cancel);
+      botaVoltar.addEventListener("mouseout", cancel);
+      botaVoltar.addEventListener("touchend", cancel);
+      botaVoltar.addEventListener("touchleave", cancel);
+      botaVoltar.addEventListener("touchcancel", cancel);
+
+      botaoBaixar.addEventListener("mousedown", (e)=> start(e,listbaixar));
+      botaoBaixar.addEventListener("touchstart", (e)=> start(e,listbaixar));
+      botaoBaixar.addEventListener("mouseup", cancel);
+      botaoBaixar.addEventListener("mouseout", cancel);
+      botaoBaixar.addEventListener("touchend", cancel);
+      botaoBaixar.addEventListener("touchleave", cancel);
+      botaoBaixar.addEventListener("touchcancel", cancel);
+
+      botaoEnter.addEventListener("mousedown", (e)=> start(e,listenter));
+      botaoEnter.addEventListener("touchstart", (e)=> start(e,listenter));
+      botaoEnter.addEventListener("mouseup", cancel);
+      botaoEnter.addEventListener("mouseout", cancel);
+      botaoEnter.addEventListener("touchend", cancel);
+      botaoEnter.addEventListener("touchleave", cancel);
+      botaoEnter.addEventListener("touchcancel", cancel);
     
 
